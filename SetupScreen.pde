@@ -45,8 +45,6 @@ class SetupScreen extends Screen {
       rect(700, 150 + i * 75, 150, 50);
     }
     
-    // Updates button based on mouse position
-    setupDoneBtn.updateButton(mouseX, mouseY);
     
     // Drawing the done button
     setupDoneBtn.drawButton();
@@ -54,7 +52,7 @@ class SetupScreen extends Screen {
   
   // Responsible for handling all mouse clicks on setup screen
   void handleMouseclick(){
-    if(setupDoneBtn.isMouseover(mouseX, mouseY)){
+    if(setupDoneBtn.isMouseover()){
       gameState = "GUESS";
     }
   }

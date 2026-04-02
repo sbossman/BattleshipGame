@@ -13,14 +13,11 @@ class MenuScreen extends Screen{
   
   // Responsible for visuals of the menu
   void display(){
+    background(bgColor);
     textSize(70);
     textAlign(CENTER);
     text("BATTLESHIP", width/2, 90);
     
-    // Updates buttons based on where mouse is
-    easyBtn.updateButton(mouseX, mouseY);
-    hardBtn.updateButton(mouseX, mouseY);
-    quitBtn.updateButton(mouseX, mouseY);
      
     // Draws buttons
     easyBtn.drawButton();
@@ -31,17 +28,17 @@ class MenuScreen extends Screen{
   
   // Responsible for handling all mouse clicks on menu screen
   void handleMouseclick(){
-    if(easyBtn.isMouseover(mouseX, mouseY)){
+    if(easyBtn.isMouseover()){
       gameMode = "EASY";
       gameState = "SETUP";
       background(255, 255, 0);
     }
-    if(hardBtn.isMouseover(mouseX, mouseY)){
+    if(hardBtn.isMouseover()){
       gameMode = "HARD";
       gameState = "SETUP";
       background(0, 0, 0);
     }
-    if(quitBtn.isMouseover(mouseX, mouseY)){
+    if(quitBtn.isMouseover()){
       exit();
     }
   }

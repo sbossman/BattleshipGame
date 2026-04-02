@@ -26,24 +26,21 @@ class Button {
   }
   
   // Checks if mouse within button bounds
-  boolean isMouseover(float mousePosX, float mousePosY){
-    boolean btwnX = (mousePosX < (x + (w/2.0))) && (mousePosX > (x - (w/2.0)));
-    boolean btwnY = (mousePosY < (y + (h/2.0))) && (mousePosY > (y - (h/2.0)));
+  boolean isMouseover(){
+    boolean btwnX = (mouseX < (x + (w/2.0))) && (mouseX > (x - (w/2.0)));
+    boolean btwnY = (mouseY < (y + (h/2.0))) && (mouseY > (y - (h/2.0)));
     
     return btwnX && btwnY;
   }
   
-  // Updates button depending on whether mouse is hovering or not
-  void updateButton(float mousePosX, float mousePosY){
-    if(isMouseover(mousePosX, mousePosY)){
+  void drawButton(){
+    if(isMouseover()){
       c = hoverColor;
     }
     else{
       c = mainColor;
     }
-  }
-  
-  void drawButton(){
+    
     rectMode(CENTER);
     textAlign(CENTER);
     noStroke();

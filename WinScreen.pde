@@ -1,14 +1,22 @@
 class WinScreen extends Screen {
+  Button toMenuBtn;
+  
   WinScreen(){
-    
-  }
-  // Responsible for visuals of the player win screen
-  void display(){
+    toMenuBtn = new Button(width/2, height/2, 400, 100, "To Menu");
     
   }
   
-  // Responsible for handling all mouse clicks on player win screen
+  void display(){
+    background(0, 200, 90);
+    textSize(40);
+    textAlign(CENTER);
+    text("YOU WIN", width/2, 100);
+    toMenuBtn.drawButton();
+  }
+  
   void handleMouseclick(){
-    
+    if(toMenuBtn.isMouseover()){
+      gameState = "MENU";
+    }
   }
 }
