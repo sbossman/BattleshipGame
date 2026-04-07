@@ -36,7 +36,8 @@ class SetupScreen extends Screen {
   void handleMouseclick(){
     showIncomplete = false;
     
-    // Checking if button selected
+    // Checking if done button hit
+    // Only goes on to next screen if everything's placed correctly
     if(setupDoneBtn.isMouseover()){
       if(illegalPlaceCheck() || !allPlaced()){
         showIncomplete = true;
@@ -45,22 +46,26 @@ class SetupScreen extends Screen {
       gameState = "GUESS";
       return;
     }
+    // Vertically flips if selected
     if(rotateBtn.isMouseover() && selectedInd != -1){
       playerBoard.battleships[selectedInd].flipVertical();
+      illegalPlaceCheck();
     }
     
     // Checking if a place on the board was selected and battleship selected
-    
+    // if they are, then it sets the position of that battleship
     if(selectedInd != -1 &&
         (mouseX > (boardX - boardSize/2) && mouseX < (boardX + boardSize/2)) &&
         (mouseY > (boardY - boardSize/2) && mouseY < (boardY + boardSize/2))){
       int x = int((mouseX - (boardX - boardSize/2))/sqSize);
       int y = int((mouseY - (boardY - boardSize/2))/sqSize);
       playerBoard.battleships[selectedInd].setPosition(x, y);
+      illegalPlaceCheck();
       return;
     }
     
-    // Checking if battleship selected
+    
+    // Checking if battleship selected, otherwise selects battleship
     selectedInd = -1;
     for(int i = 0; i < playerBoard.battleships.length; i++){
       playerBoard.battleships[i].unselect();      
@@ -72,7 +77,7 @@ class SetupScreen extends Screen {
       playerBoard.battleships[selectedInd].select();
     }
     
-    illegalPlaceCheck();
+    
   }
   
   boolean allPlaced(){
@@ -84,15 +89,19 @@ class SetupScreen extends Screen {
   
   boolean illegalPlaceCheck(){
     boolean illegal = false;
+    boolean[] notOverEdge = new boolean[playerBoard.battleships.length];
+    boolean[] noOverlap = new boolean[playerBoard.battleships.length];
+    
     for(int i = 0; i < playerBoard.battleships.length; i++){
-      playerBoard.battleships[i].setIllegallyPlaced(false);
+      notOverEdge[i] = true;
+      noOverlap[i] = true;
+    }
+    
+    for(int i = 0; i < playerBoard.battleships.length; i++){
       Battleship bshp = playerBoard.battleships[i];
-      print("X2: " + bshp.positions[bshp.size - 1][0] + "\t Y2: " + bshp.positions[bshp.size - 1][1]);
       if(bshp.positions[bshp.size - 1][0] >= boardSq || bshp.positions[bshp.size - 1][1] >= boardSq){
-        playerBoard.battleships[i].setIllegallyPlaced(true);
-        illegal = true;
-        break;
-      }      
+        notOverEdge[i] = false;
+      }
       
       int x = bshp.positions[0][0];
       int y = bshp.positions[0][1];
@@ -105,19 +114,29 @@ class SetupScreen extends Screen {
       for(int j = 0; j < playerBoard.battleships.length; j++){
         Battleship bshp2 = playerBoard.battleships[j];
         if(i == j || bshp2.positions[0][0] == -1) continue;
-        
+               
         for(int p = 0; p < bshp2.positions.length; p++){
           int xB = bshp2.positions[0][0];
           int yB = bshp2.positions[0][1];
           if(xB >= x && xB < x + xSize && yB >= y && yB < y + ySize){
-            playerBoard.battleships[i].setIllegallyPlaced(true);
-            playerBoard.battleships[j].setIllegallyPlaced(true);
-            illegal = true;
+            notOverEdge[i] = false;
+            notOverEdge[j] = false;
           }
         }
       }
     }
-    
-    return illegal;
+   
+   boolean flag = false;
+   for(int i = 0; i < playerBoard.battleships.length; i++){
+     if(!notOverEdge[i] || !noOverlap[i]){
+       playerBoard.battleships[i].setIllegallyPlaced(true);
+       flag = true;
+     }
+     else {
+       playerBoard.battleships[i].setIllegallyPlaced(false);
+     }
+   }
+   
+   return flag;
   }
 }
