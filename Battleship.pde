@@ -24,6 +24,7 @@ class Battleship {
   }
   
   void setPosition(int x, int y){
+    println("X: " + x + "\t Y: " + y);
     for(int i = 0; i < size; i++){
       if(vertical){
         positions[i][0] = x;
@@ -68,21 +69,28 @@ class Battleship {
   void drawBattleship(){
     int x = 0;
     int y = 0;
-    img.resize(0, sqSize);
-    if(selected){
-      img.resize(0, int(sqSize * 1.2));
-    }
+    img.resize(sqSize * size, sqSize);
+    
     if(positions[0][0] == -1){
       x = 700;
       y = size * 75;
     }
     else if(gameState == "SETUP"){
-      x = positions[0][0] * sqSize;
-      y = positions[0][0] * sqSize;
+      x = positions[0][0] * sqSize + (int)(300 - (boardSize/2));
+      y = positions[0][1] * sqSize + (int)(height/2 - (boardSize/2));
     }
     else if(gameState == "GUESS"){
       x = positions[0][0] * sqSize;
-      y = positions[0][0] * sqSize;
+      y = positions[0][1] * sqSize;
+    }
+    if(selected){
+      rectMode(CORNER);
+      if(vertical){
+        rect(x, y, sqSize, size * sqSize);
+      }
+      else {
+        rect(x, y, size * sqSize, sqSize);
+      }
     }
     image(img, x, y);
   }
@@ -90,20 +98,33 @@ class Battleship {
   boolean isMouseover(){
     int x = 0;
     int y = 0;
+    
     if(positions[0][0] == -1){
       x = 700;
       y = size * 75;
     }
     else{
-      x = positions[0][0] * sqSize + 0;
-      y = positions[0][0] * sqSize + 0;
+      x = (positions[0][0] * sqSize) + (int)(300 - (boardSize/2));
+      y = (positions[0][1] * sqSize) + (int)(height/2 - (boardSize/2));
     }
-    boolean btwnX = (mouseX > x) && (mouseX < x * size * sqSize);
-    boolean btwnY = (mouseY > y) && (mouseY < y * size * sqSize);
+    
+    boolean btwnX = (mouseX > x) && (mouseX < x + sqSize);
+    boolean btwnY = (mouseY > y) && (mouseY < y + sqSize);
+    if(vertical){
+      btwnY = (mouseY > y) && (mouseY < y + (size * sqSize));
+      println("VERTICAL");
+    }
+    else{
+      btwnX = (mouseX > x) && (mouseX < x + (size * sqSize));
+    }
     return btwnX && btwnY;
   }
   
-  void click(){
-    selected = !selected;
+  void select(){
+    selected = true;
+  }
+  
+  void unselect(){
+    selected = false;
   }
 }

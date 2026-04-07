@@ -3,15 +3,15 @@ class Board{
   Coordinate[][] board;
   
   // TODO: Implement everything
-  Board(int xSize, int ySize){
+  Board(){
     battleships = new Battleship[4];
     for(int i = 0; i < 4; i++){
       battleships[i] = new Battleship(i + 2);
     }
     
-    board = new Coordinate[xSize][ySize];
-    for(int i = 0; i < xSize; i++){
-      for(int j = 0; j < ySize; j++){
+    board = new Coordinate[boardSq][boardSq];
+    for(int i = 0; i < boardSq; i++){
+      for(int j = 0; j < boardSq; j++){
         board[i][j] = new Coordinate();
       }
     }

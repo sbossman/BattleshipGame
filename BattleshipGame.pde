@@ -3,7 +3,7 @@ color btnColor = color(1, 30, 105);
 color btnHoverColor = color(41, 74, 158);
 
 float boardSize = 370;
-float boardSq = 10;
+int boardSq = 10;
 int sqSize = int(boardSize/boardSq);
 
 String gameMode;
