@@ -7,6 +7,8 @@ class Battleship {
   
   boolean selected = false;
   
+  boolean illegallyPlaced = false;
+  
   // TODO: Implement everything
   Battleship(int _size){
     size = _size;    
@@ -24,7 +26,6 @@ class Battleship {
   }
   
   void setPosition(int x, int y){
-    println("X: " + x + "\t Y: " + y);
     for(int i = 0; i < size; i++){
       if(vertical){
         positions[i][0] = x;
@@ -37,8 +38,17 @@ class Battleship {
     }
   }
   
+  void setIllegallyPlaced(boolean ip){
+    illegallyPlaced = ip;
+  }
+  
   void setVertical(boolean v){
     vertical = v;
+  }
+  
+  void flipVertical(){
+    vertical = !vertical;
+    setPosition(positions[0][0], positions[0][1]);
   }
   
   boolean checkIfHit(int x, int y){
@@ -83,16 +93,27 @@ class Battleship {
       x = positions[0][0] * sqSize;
       y = positions[0][1] * sqSize;
     }
-    if(selected){
-      rectMode(CORNER);
-      if(vertical){
-        rect(x, y, sqSize, size * sqSize);
-      }
-      else {
-        rect(x, y, size * sqSize, sqSize);
-      }
+    
+    pushMatrix();
+    translate(x, y);
+    if(vertical){
+      translate(sqSize, 0);
+      rotate(PI/2);
     }
-    image(img, x, y);
+    if(illegallyPlaced && selected){
+      tint(255, 100, 0);
+    }
+    else if(illegallyPlaced){
+      tint(255, 0, 0);
+    }
+    else if(selected){
+      tint(100, 255, 100);
+    }
+    else{
+      tint(255);
+    }
+    image(img, 0, 0);
+    popMatrix();
   }
   
   boolean isMouseover(){
