@@ -147,7 +147,7 @@ class GuessScreen extends Screen{
               guess = posToCheck;
             }
             else{
-              for(int c = lowEdge[1] + 1; c < 10; c++){
+              for(int c = lowEdge[0] + 1; c < 10; c++){
                 posToCheck[0] = c;
                 if(withinBounds(posToCheck) && !playerBoard.hasBeenGuessed(posToCheck)){
                   guess = posToCheck;
