@@ -28,6 +28,10 @@ class Board{
     return false;
   }
   
+  boolean hasBeenGuessed(int[] p){
+    return board[p[0]][p[1]].guessed;
+  }
+  
   void finishSetup(){
     println("Setting coordinates");
     for(int i = 0; i < battleships.length; i++){
@@ -97,4 +101,10 @@ class Board{
     }
     
   }
+}
+
+boolean withinBounds(int[] pos){
+  boolean xWithin = pos[0] >= 0 && pos[0] < 10;
+  boolean yWithin = pos[1] >= 0 && pos[1] < 10;
+  return xWithin && yWithin;
 }

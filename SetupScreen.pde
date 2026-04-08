@@ -102,8 +102,7 @@ class SetupScreen extends Screen {
       if(bshp.positions[0][0] == -1) continue; // Checks if this ship hasn't yet been initialized
       
       // Checking if a ship is over the edge of the board
-      if(bshp.positions[bshp.size - 1][0] >= boardSq || 
-         bshp.positions[bshp.size - 1][1] >= boardSq){
+      if(!withinBounds(bshp.positions[bshp.size - 1]) || !withinBounds(bshp.positions[0])){
         notOverEdge[i] = false;
       }
       

@@ -78,7 +78,7 @@ class GuessScreen extends Screen{
   
   int[] guessEasy(){
     int[] guess = {(int) random(10), (int) random(10)};
-    while(playerBoard.board[guess[0]][guess[1]].guessed){
+    while(playerBoard.hasBeenGuessed(guess)){
       guess[0] = (int) random(10);
       guess[1] = (int) random(10);
     }
@@ -86,13 +86,95 @@ class GuessScreen extends Screen{
   }
   
   int[] guessHard(){
-    boolean ideaForNextGuess;
-    int[] guess = {(int) random(10), (int) random(10)};
-    while(playerBoard.board[guess[0]][guess[1]].guessed){
+    int[] guess = {-1, -1};
+    
+    for(int i = 0; i < playerBoard.battleships.length; i++){
+      Battleship bshp = playerBoard.battleships[i];
+      if(bshp.sunk) continue;
+      
+      int bshpHits = 0;
+      int[] lowEdge = {10, 10}; // the position on ship with the lowest value
+      
+      
+      for(int j = 0; j < bshp.positions.length; j++){
+        int[] pos = bshp.positions[j];
+        if(playerBoard.hasBeenGuessed(pos)){
+          if(pos[0] < lowEdge[0] || pos[1] < lowEdge[1]){
+            lowEdge[0] = pos[0];
+            lowEdge[1] = pos[1];
+          }
+          bshpHits++;
+        }
+      }
+      
+      int[] up = {0, -1};
+      int[] down = {0, 1};
+      int[] left = {-1, 0};
+      int[] right = {1, 0};
+      int[][] directions = {up, right, down, left}; // Vertical is even, horizontal is odd
+      // If the battleship has been hit once, we need to figure out if it's horizontal or not
+      if(bshpHits == 1){
+        for(int d = 0; d < directions.length; d++){
+          int[] dir = directions[d];
+          // If that direction hasn't been guessed, update the guess to that value
+          int[] posToCheck = {lowEdge[0] + dir[0], lowEdge[1] + dir[1]};
+          if(withinBounds(posToCheck) && !playerBoard.hasBeenGuessed(posToCheck)){
+            guess = posToCheck;
+          }          
+        }
+      }
+      // If the battleship has been hit more than once, we keep guessing along that line
+      else if(bshpHits > 0){
+        for(int d = 0; d < directions.length; d++){
+          if(bshp.vertical){
+            int[] posToCheck = {lowEdge[0], lowEdge[1] - 1};
+            if(withinBounds(posToCheck) && !playerBoard.hasBeenGuessed(posToCheck)){
+              guess = posToCheck;
+            }
+            else{
+              for(int c = lowEdge[1] + 1; c < 10; c++){
+                posToCheck[1] = c;
+                if(withinBounds(posToCheck) && !playerBoard.hasBeenGuessed(posToCheck)){
+                  guess = posToCheck;
+                  break;
+                }
+              }
+            }
+          }
+          else{
+            int[] posToCheck = {lowEdge[0] - 1, lowEdge[1]};
+            if(withinBounds(posToCheck) && !playerBoard.hasBeenGuessed(posToCheck)){
+              guess = posToCheck;
+            }
+            else{
+              for(int c = lowEdge[1] + 1; c < 10; c++){
+                posToCheck[0] = c;
+                if(withinBounds(posToCheck) && !playerBoard.hasBeenGuessed(posToCheck)){
+                  guess = posToCheck;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    if(guess[0] != -1){
+      return guess;
+    }
+    
+    
+    guess[0] = (int) random(10);
+    guess[1] = (int) random(10);
+    while(guess[0] != -1 && playerBoard.hasBeenGuessed(guess)){
       guess[0] = (int) random(10);
       guess[1] = (int) random(10);
     }
     return guess;
   }
+  
+  
+  
   
 }
