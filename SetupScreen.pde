@@ -11,7 +11,7 @@ class SetupScreen extends Screen {
   SetupScreen(){
     setupDoneBtn = new Button(width/2, 550, 200, 50, "Done");
     rotateBtn = new Button(3 * width/4, 550, 150, 50, "Rotate");
-    playerBoard = new Board();
+    
   }
   
   // Responsible for visuals of the setup screen
@@ -43,7 +43,7 @@ class SetupScreen extends Screen {
         showIncomplete = true;
         return;
       }
-      gameState = "GUESS";
+      switchToNextScene();
       return;
     }
     // Vertically flips if selected
@@ -117,9 +117,9 @@ class SetupScreen extends Screen {
       }
       
       // Checking if it overlaps with another ship
-      for(int j = i + 1; j < playerBoard.battleships.length; j++){
+      for(int j = 0; j < playerBoard.battleships.length; j++){
         Battleship bshp2 = playerBoard.battleships[j];
-        if(bshp2.positions[0][0] == -1) continue; // Ensures ship is initialized
+        if(i == j || bshp2.positions[0][0] == -1) continue; // Ensures ship is initialized and a ship isn't checking itself
                
         for(int p = 0; p < bshp2.positions.length; p++){
           int xB = bshp2.positions[0][0];
@@ -145,5 +145,13 @@ class SetupScreen extends Screen {
    }
    
    return flag;
+  }
+  
+  void switchToNextScene(){
+    gameState = "GUESS";
+    comBoard = new Board();
+    comBoard.setRandomShips();
+    comBoard.finishSetup();
+    playerBoard.finishSetup();
   }
 }

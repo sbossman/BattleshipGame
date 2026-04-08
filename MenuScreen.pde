@@ -30,16 +30,20 @@ class MenuScreen extends Screen{
   void handleMouseclick(){
     if(easyBtn.isMouseover()){
       gameMode = "EASY";
-      gameState = "SETUP";
-      background(255, 255, 0);
+      switchToNextScene();
     }
     if(hardBtn.isMouseover()){
       gameMode = "HARD";
-      gameState = "SETUP";
-      background(0, 0, 0);
+      switchToNextScene();
+      
     }
     if(quitBtn.isMouseover()){
       exit();
     }
+  }
+  
+  void switchToNextScene(){
+    playerBoard = new Board();
+    gameState = "SETUP";
   }
 }

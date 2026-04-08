@@ -93,24 +93,21 @@ class Battleship {
     pushMatrix();
     translate(x, y);
     
-    if(gameState == "GUESS"){
-      tint(255);
-    }
-    else if(vertical){
+    
+    if(vertical){
       translate(sqSize, 0);
       rotate(PI/2);
     }
-    else if(illegallyPlaced && selected){
-      tint(255, 100, 0);
-    }
-    else if(illegallyPlaced){
-      tint(255, 0, 0);
-    }
-    else if(selected){
-      tint(100, 255, 100);
+    
+    if(gameState == "GUESS"){
+      if(sunk)  tint(255, 0, 0);
+      else   tint(255);
     }
     else{
-      tint(255);
+      if(illegallyPlaced && selected)  tint(255, 100, 0);
+      else if(illegallyPlaced)  tint(255, 0, 0);
+      else if(selected)  tint(100, 255, 100);
+      else  tint(255);
     }
     
     image(img, 0, 0);

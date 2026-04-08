@@ -7,6 +7,10 @@ class Screen {
   void handleMouseclick(){
     
   }
+  
+  void switchToNextScreen(){
+    
+  }
 }
 
 

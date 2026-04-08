@@ -9,6 +9,6 @@ class Coordinate{
   
   void guess() {
     guessed = true;
-    // TODO: Implement other logic as well
   }
+  
 }

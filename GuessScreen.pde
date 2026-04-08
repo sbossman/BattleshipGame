@@ -2,13 +2,13 @@ class GuessScreen extends Screen{
   Button loseBtn;
   Button winBtn;
   
+  int comBoardX = 675;
+  int playerBoardX = 225;
+  int boardY = height/2;
+  
   GuessScreen(){
-    
     loseBtn = new Button(width/4, 550, 200, 60, "Lose Game");
     winBtn = new Button(3 * width/4, 550, 200, 60, "Win Game");
-    initializeComputerBoard();
-    
-    // TODO: Initialize computer board
   }
   
   void display(){
@@ -18,8 +18,8 @@ class GuessScreen extends Screen{
     fill(255);
     text("Guess ship locations!", width/2, 50);
     
-    playerBoard.drawBoard(225, height/2, true);
-    comBoard.drawBoard(675, height/2, true);
+    playerBoard.drawBoard(playerBoardX, boardY, true);
+    comBoard.drawBoard(comBoardX,  boardY, false);
     
     textSize(24);
     fill(255);
@@ -38,15 +38,27 @@ class GuessScreen extends Screen{
     if(winBtn.isMouseover()){
       gameState = "WIN";
     }
+    
+    if((mouseX > (comBoardX - boardSize/2) && mouseX < (comBoardX + boardSize/2)) &&
+        (mouseY > (boardY - boardSize/2) && mouseY < (boardY + boardSize/2))){
+      int x = int((mouseX - (comBoardX - boardSize/2))/sqSize);
+      int y = int((mouseY - (boardY - boardSize/2))/sqSize);
+      comBoard.guessPosition(x,y);
+    }
+    if((mouseX > (playerBoardX - boardSize/2) && mouseX < (playerBoardX + boardSize/2)) &&
+        (mouseY > (boardY - boardSize/2) && mouseY < (boardY + boardSize/2))){
+      int x = int((mouseX - (playerBoardX - boardSize/2))/sqSize);
+      int y = int((mouseY - (boardY - boardSize/2))/sqSize);
+      playerBoard.guessPosition(x,y);
+    }
+    
+    if(playerBoard.checkLoss()){
+      gameState = "LOST";
+    }
+    if(comBoard.checkLoss()){
+      gameState = "WIN";
+    }
+    
   }
   
-}
-
-void initializeComputerBoard(){
-    comBoard = new Board();
-    
-    // TODO: make this random
-    for(int i = 0; i < comBoard.battleships.length ; i++){
-      comBoard.battleships[i].setPosition(7 - i, i * 2);
-    }
 }

@@ -29,10 +29,17 @@ class Board{
   }
   
   void finishSetup(){
-    
+    println("Setting coordinates");
+    for(int i = 0; i < battleships.length; i++){
+      for(int j = 0; j < battleships[i].positions.length; j++){
+        int x = battleships[i].positions[j][0];
+        int y = battleships[i].positions[j][1];
+        if(x != -1 && y != -1)  board[x][y].ship = true;
+      }
+    }
   }
   
-  void drawBoard(int boardX, int boardY, boolean showShips){
+  void drawBoard(int boardX, int boardY, boolean showUnsunkShips){
     float boardL = boardX - (boardSize/2);
     float boardB = boardY + (boardSize/2);
     float boardT = boardY - (boardSize/2);
@@ -56,15 +63,38 @@ class Board{
       line(boardL + (i * sqSize), boardT, boardL + (i * sqSize), boardB);
     }
     
-    if(showShips){
-      for(int i = 0; i < battleships.length; i++){
-        battleships[i].drawBattleship((int)boardL, (int)boardT);
+    for(int i = 0; i < battleships.length; i++){
+      if(battleships[i].sunk || showUnsunkShips) battleships[i].drawBattleship((int)boardL, (int)boardT);
+    }
+    
+    // Draws guesses
+    if(gameState == "GUESS"){
+      for(int x = 0; x < 10; x++){
+        for(int y = 0; y < 10; y++){
+          if(board[x][y].guessed){
+            noStroke();
+            if(board[x][y].ship) fill(255, 0, 0);
+            else fill(255);
+            circle(x * sqSize + boardX - (boardSize/2) + (sqSize/2), y * sqSize + boardY - (boardSize/2) + (sqSize/2), sqSize - 7);
+          }
+        }
       }
     }
   }
   
   boolean checkLoss(){
-    return false;
-  }
+    for(int i = 0; i < battleships.length; i++){
+      if(!battleships[i].sunk) return false;
+    }
+    return true;
+  }  
   
+  
+  void setRandomShips(){
+    // TODO: Make this actually random
+      for(int i = 0; i < comBoard.battleships.length ; i++){
+      comBoard.battleships[i].setPosition(7 - i, i * 2);
+    }
+    
+  }
 }
