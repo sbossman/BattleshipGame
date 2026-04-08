@@ -6,6 +6,7 @@ class GuessScreen extends Screen{
   int playerBoardX = 225;
   int boardY = height/2;
   
+    
   GuessScreen(){
     loseBtn = new Button(width/4, 550, 200, 60, "Lose Game");
     winBtn = new Button(3 * width/4, 550, 200, 60, "Win Game");
@@ -43,8 +44,11 @@ class GuessScreen extends Screen{
         (mouseY > (boardY - boardSize/2) && mouseY < (boardY + boardSize/2))){
       int x = int((mouseX - (comBoardX - boardSize/2))/sqSize);
       int y = int((mouseY - (boardY - boardSize/2))/sqSize);
-      comBoard.guessPosition(x,y);
-      comGuess();
+      
+      // Allows user to guess until they miss (guess position returns true on hit)
+      if(!comBoard.guessPosition(x,y)){
+        while(comGuess());
+      }
     }
     
     /*
@@ -65,11 +69,11 @@ class GuessScreen extends Screen{
     
   }
   
-  void comGuess(){
+  boolean comGuess(){
     int[] guess = new int[2];
     if(gameMode == "EASY") guess = guessEasy();
     else guess = guessHard();
-    playerBoard.guessPosition(guess[0], guess[1]);
+    return playerBoard.guessPosition(guess[0], guess[1]);
   }
   
   int[] guessEasy(){
@@ -82,6 +86,7 @@ class GuessScreen extends Screen{
   }
   
   int[] guessHard(){
+    boolean ideaForNextGuess;
     int[] guess = {(int) random(10), (int) random(10)};
     while(playerBoard.board[guess[0]][guess[1]].guessed){
       guess[0] = (int) random(10);
