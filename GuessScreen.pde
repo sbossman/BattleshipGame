@@ -44,13 +44,17 @@ class GuessScreen extends Screen{
       int x = int((mouseX - (comBoardX - boardSize/2))/sqSize);
       int y = int((mouseY - (boardY - boardSize/2))/sqSize);
       comBoard.guessPosition(x,y);
+      comGuess();
     }
+    
+    /*
     if((mouseX > (playerBoardX - boardSize/2) && mouseX < (playerBoardX + boardSize/2)) &&
         (mouseY > (boardY - boardSize/2) && mouseY < (boardY + boardSize/2))){
       int x = int((mouseX - (playerBoardX - boardSize/2))/sqSize);
       int y = int((mouseY - (boardY - boardSize/2))/sqSize);
       playerBoard.guessPosition(x,y);
     }
+    */
     
     if(playerBoard.checkLoss()){
       gameState = "LOST";
@@ -59,6 +63,31 @@ class GuessScreen extends Screen{
       gameState = "WIN";
     }
     
+  }
+  
+  void comGuess(){
+    int[] guess = new int[2];
+    if(gameMode == "EASY") guess = guessEasy();
+    else guess = guessHard();
+    playerBoard.guessPosition(guess[0], guess[1]);
+  }
+  
+  int[] guessEasy(){
+    int[] guess = {(int) random(10), (int) random(10)};
+    while(playerBoard.board[guess[0]][guess[1]].guessed){
+      guess[0] = (int) random(10);
+      guess[1] = (int) random(10);
+    }
+    return guess;
+  }
+  
+  int[] guessHard(){
+    int[] guess = {(int) random(10), (int) random(10)};
+    while(playerBoard.board[guess[0]][guess[1]].guessed){
+      guess[0] = (int) random(10);
+      guess[1] = (int) random(10);
+    }
+    return guess;
   }
   
 }
