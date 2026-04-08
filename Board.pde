@@ -32,7 +32,7 @@ class Board{
     
   }
   
-  void drawBoard(int boardX, int boardY){
+  void drawBoard(int boardX, int boardY, boolean showShips){
     float boardL = boardX - (boardSize/2);
     float boardB = boardY + (boardSize/2);
     float boardT = boardY - (boardSize/2);
@@ -49,14 +49,17 @@ class Board{
       text(str(10-i), boardL - 15, boardT + (i * sqSize) + (sqSize/2) + 5);
       // Alphabet on bottom of board
       text(char(i+97), boardL  + (i * sqSize) + (sqSize/2), boardB + 20);
+      stroke(255);
       // Horizontal lines
       line(boardL, boardT + (i * sqSize), boardL + boardSize, boardT + (i * sqSize));
       // Vertical lines
       line(boardL + (i * sqSize), boardT, boardL + (i * sqSize), boardB);
     }
     
-    for(int i = 0; i < battleships.length; i++){
-      battleships[i].drawBattleship();
+    if(showShips){
+      for(int i = 0; i < battleships.length; i++){
+        battleships[i].drawBattleship((int)boardL, (int)boardT);
+      }
     }
   }
   

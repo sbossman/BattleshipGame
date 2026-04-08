@@ -26,7 +26,7 @@ class SetupScreen extends Screen {
     
     stroke(255);
     
-    playerBoard.drawBoard(boardX, boardY);
+    playerBoard.drawBoard(boardX, boardY, true);
     // Drawing the done button
     setupDoneBtn.drawButton();
     rotateBtn.drawButton();
@@ -75,11 +75,10 @@ class SetupScreen extends Screen {
     }
     if(selectedInd != -1){
       playerBoard.battleships[selectedInd].select();
-    }
-    
-    
+    }    
   }
   
+  // Checks if all ships are placed
   boolean allPlaced(){
     for(int i = 0; i < playerBoard.battleships.length; i++){
       if(playerBoard.battleships[i].positions[0][0] == -1) return false;
@@ -88,18 +87,23 @@ class SetupScreen extends Screen {
   }
   
   boolean illegalPlaceCheck(){
-    boolean illegal = false;
     boolean[] notOverEdge = new boolean[playerBoard.battleships.length];
     boolean[] noOverlap = new boolean[playerBoard.battleships.length];
     
+    // Initializing all ships to be in valid positions
     for(int i = 0; i < playerBoard.battleships.length; i++){
       notOverEdge[i] = true;
       noOverlap[i] = true;
     }
     
+    // Checking individual ships
     for(int i = 0; i < playerBoard.battleships.length; i++){
       Battleship bshp = playerBoard.battleships[i];
-      if(bshp.positions[bshp.size - 1][0] >= boardSq || bshp.positions[bshp.size - 1][1] >= boardSq){
+      if(bshp.positions[0][0] == -1) continue; // Checks if this ship hasn't yet been initialized
+      
+      // Checking if a ship is over the edge of the board
+      if(bshp.positions[bshp.size - 1][0] >= boardSq || 
+         bshp.positions[bshp.size - 1][1] >= boardSq){
         notOverEdge[i] = false;
       }
       
@@ -111,9 +115,11 @@ class SetupScreen extends Screen {
         ySize = bshp.size;
         xSize = 1;
       }
-      for(int j = 0; j < playerBoard.battleships.length; j++){
+      
+      // Checking if it overlaps with another ship
+      for(int j = i + 1; j < playerBoard.battleships.length; j++){
         Battleship bshp2 = playerBoard.battleships[j];
-        if(i == j || bshp2.positions[0][0] == -1) continue;
+        if(bshp2.positions[0][0] == -1) continue; // Ensures ship is initialized
                
         for(int p = 0; p < bshp2.positions.length; p++){
           int xB = bshp2.positions[0][0];
@@ -126,6 +132,7 @@ class SetupScreen extends Screen {
       }
     }
    
+   // Uses the previous flags to flag certain ships as illegally placed
    boolean flag = false;
    for(int i = 0; i < playerBoard.battleships.length; i++){
      if(!notOverEdge[i] || !noOverlap[i]){

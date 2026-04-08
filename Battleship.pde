@@ -76,7 +76,7 @@ class Battleship {
     return sunk;
   }
   
-  void drawBattleship(){
+  void drawBattleship(int boardX, int boardY){
     int x = 0;
     int y = 0;
     img.resize(sqSize * size, sqSize);
@@ -85,22 +85,22 @@ class Battleship {
       x = 700;
       y = size * 75;
     }
-    else if(gameState == "SETUP"){
-      x = positions[0][0] * sqSize + (int)(300 - (boardSize/2));
-      y = positions[0][1] * sqSize + (int)(height/2 - (boardSize/2));
-    }
-    else if(gameState == "GUESS"){
-      x = positions[0][0] * sqSize;
-      y = positions[0][1] * sqSize;
+    else{
+      x = positions[0][0] * sqSize + boardX;
+      y = positions[0][1] * sqSize + boardY;
     }
     
     pushMatrix();
     translate(x, y);
-    if(vertical){
+    
+    if(gameState == "GUESS"){
+      tint(255);
+    }
+    else if(vertical){
       translate(sqSize, 0);
       rotate(PI/2);
     }
-    if(illegallyPlaced && selected){
+    else if(illegallyPlaced && selected){
       tint(255, 100, 0);
     }
     else if(illegallyPlaced){
@@ -112,6 +112,7 @@ class Battleship {
     else{
       tint(255);
     }
+    
     image(img, 0, 0);
     popMatrix();
   }
