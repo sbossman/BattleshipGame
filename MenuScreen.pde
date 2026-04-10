@@ -1,6 +1,6 @@
 class MenuScreen extends Screen{
-  int btnWidth = 400;
-  int btnHeight = 100;
+  int btnWidth = 402;
+  int btnHeight = 102;
   Button easyBtn;
   Button hardBtn;
   Button quitBtn;

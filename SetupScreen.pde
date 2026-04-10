@@ -3,14 +3,14 @@ class SetupScreen extends Screen {
   Button rotateBtn;
   int selectedInd = -1;
   
-  int boardX = 300;
+  int boardX = 240;
   int boardY = height/2;
   boolean showIncomplete = false;
   
   
   SetupScreen(){
-    setupDoneBtn = new Button(width/2, 550, 200, 50, "Done");
-    rotateBtn = new Button(3 * width/4, 550, 150, 50, "Rotate");
+    setupDoneBtn = new Button(5 * width/8 - 1, 552, 150, 50, "Done");
+    rotateBtn = new Button(7 * width/8, 550, 152, 50, "Rotate");
     
   }
   

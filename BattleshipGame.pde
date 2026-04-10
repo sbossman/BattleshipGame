@@ -2,7 +2,7 @@ color bgColor = color(75, 175, 255);
 color btnColor = color(1, 30, 105);
 color btnHoverColor = color(41, 74, 158);
 
-float boardSize = 370;
+float boardSize = 400;
 int boardSq = 10;
 int sqSize = int(boardSize/boardSq);
 

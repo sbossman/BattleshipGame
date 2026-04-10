@@ -1,6 +1,7 @@
 class Board{
   Battleship[] battleships;
   Coordinate[][] board;
+  PImage img = loadImage("Water.png");
   
   // TODO: Implement everything
   Board(){
@@ -49,8 +50,10 @@ class Board{
     float boardT = boardY - (boardSize/2);
     
     rectMode(CENTER);
-    fill(btnColor);
-    rect(boardX, boardY, boardSize, boardSize);
+    //fill(btnColor);
+    //rect(boardX, boardY, boardSize, boardSize);
+    tint(255);
+    image(img, boardX - boardSize/2, boardY - boardSize/2, boardSize, boardSize);
     
     // Draws the board with the appropriate lines and labels
     for (int i = 0; i < 10; i++) {
@@ -66,6 +69,9 @@ class Board{
       // Vertical lines
       line(boardL + (i * sqSize), boardT, boardL + (i * sqSize), boardB);
     }
+    
+    noFill();
+    rect(boardX, boardY, boardSize, boardSize);
     
     for(int i = 0; i < battleships.length; i++){
       if(battleships[i].sunk || showUnsunkShips) battleships[i].drawBattleship((int)boardL, (int)boardT);

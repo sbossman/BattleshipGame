@@ -123,7 +123,7 @@ class Battleship {
       y = size * 75;
     }
     else{
-      x = (positions[0][0] * sqSize) + (int)(300 - (boardSize/2));
+      x = (positions[0][0] * sqSize) + (int)(240 - (boardSize/2));
       y = (positions[0][1] * sqSize) + (int)(height/2 - (boardSize/2));
     }
     

@@ -2,8 +2,8 @@ class GuessScreen extends Screen{
   Button loseBtn;
   Button winBtn;
   
-  int comBoardX = 675;
-  int playerBoardX = 225;
+  int comBoardX = 680;
+  int playerBoardX = 240;
   int boardY = height/2;
   
     

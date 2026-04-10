@@ -2,7 +2,7 @@ class WinScreen extends Screen {
   Button toMenuBtn;
   
   WinScreen(){
-    toMenuBtn = new Button(width/2, height/2, 400, 100, "To Menu");
+    toMenuBtn = new Button(width/2, height/2, 402, 102, "To Menu");
     
   }
   

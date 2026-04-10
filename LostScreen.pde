@@ -2,7 +2,7 @@ class LostScreen extends Screen {
   Button toMenuBtn;
   
   LostScreen(){
-    toMenuBtn = new Button(width/2, height/2, 400, 100, "To Menu");
+    toMenuBtn = new Button(width/2, height/2, 400, 102, "To Menu");
     
   }
   
