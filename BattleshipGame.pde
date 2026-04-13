@@ -11,6 +11,12 @@ String gameMode;
 String gameState = "MENU"; 
 HashMap<String, Screen> screens = new HashMap<String, Screen>();
 
+PFont DejaVu20;
+PFont DejaVu30;
+PFont DejaVu40;
+PFont Oswald40;
+PFont Oswald70;
+
 Screen currentScreen;
 
 Board playerBoard;
@@ -20,6 +26,12 @@ void setup() {
   size(900, 600);
   background(bgColor);
   rectMode(CENTER);
+  
+  DejaVu20 = loadFont("DejaVu-20.vlw");
+  DejaVu30 = loadFont("DejaVu-30.vlw");
+  DejaVu40 = loadFont("DejaVu-40.vlw");
+  Oswald40 = loadFont("Oswald-40.vlw");
+  Oswald70 = loadFont("Oswald-70.vlw");
   
   // Establishing button positions
   screens.put("MENU", new MenuScreen());

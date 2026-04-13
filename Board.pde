@@ -58,7 +58,7 @@ class Board{
     // Draws the board with the appropriate lines and labels
     for (int i = 0; i < 10; i++) {
       fill(255);
-      textSize(20);
+      textFont(DejaVu20);
       // Numbers on left of board
       text(str(10-i), boardL - 15, boardT + (i * sqSize) + (sqSize/2) + 5);
       // Alphabet on bottom of board

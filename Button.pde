@@ -47,7 +47,7 @@ class Button {
     fill(c);
     rect(x, y, w, h);
     fill(255);
-    textSize(40);
-    text(txt, x, y + h/8);
+    textFont(DejaVu40);
+    text(txt, x+1, y + 15);
   }
 }

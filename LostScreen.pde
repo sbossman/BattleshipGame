@@ -8,10 +8,9 @@ class LostScreen extends Screen {
   
   void display(){
     background(200, 50, 50);
-    textSize(40);
+    textFont(Oswald40);
     textAlign(CENTER);
     text("YOU LOST", width/2, 100);
-    
     toMenuBtn.drawButton();
   }
   

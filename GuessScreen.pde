@@ -14,18 +14,17 @@ class GuessScreen extends Screen{
   
   void display(){
     background(bgColor);
-    
-    textSize(30);
+    textFont(DejaVu30);
     fill(255);
     text("Guess ship locations!", width/2, 50);
     
     playerBoard.drawBoard(playerBoardX, boardY, true);
     comBoard.drawBoard(comBoardX,  boardY, false);
     
-    textSize(24);
+    textFont(DejaVu20);
     fill(255);
-    text("Your board", 245, height/2 - boardSize/2 - 20);
-    text("Computer board", 665, height/2 - boardSize/2 - 20);
+    text("Your board", 240, height/2 - boardSize/2 - 10);
+    text("Computer board", 680, height/2 - boardSize/2 - 10);
     
     winBtn.drawButton();
     loseBtn.drawButton();

@@ -14,12 +14,12 @@ class MenuScreen extends Screen{
   // Responsible for visuals of the menu
   void display(){
     background(bgColor);
-    textSize(70);
     textAlign(CENTER);
-    text("BATTLESHIP", width/2, 90);
+    textFont(Oswald70);
+    text("BATTLESHIP", width/2 + 1, 80);
     
-     
     // Draws buttons
+    //textFont(DejaVu40);
     easyBtn.drawButton();
     hardBtn.drawButton();
     quitBtn.drawButton();
