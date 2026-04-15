@@ -102,10 +102,51 @@ class Board{
   
   void setRandomShips(){
     // TODO: Make this actually random
-      for(int i = 0; i < comBoard.battleships.length ; i++){
-      comBoard.battleships[i].setPosition(7 - i, i * 2);
+    int a;
+    int b;
+    int v;
+    int i = 0;
+      while(i < comBoard.battleships.length){
+        a = int(random(10));
+        b = int(random(10));
+        v = int(random(2));
+        
+        if(v == 1){
+          comBoard.battleships[i].setVertical(true);
+        }
+        
+        comBoard.battleships[i].setPosition(a, b);
+        
+        Battleship bshp = comBoard.battleships[i];
+        
+        // Checking if a ship is over the edge of the board
+        if (!withinBounds(bshp.positions[bshp.size - 1]) || !withinBounds(bshp.positions[0])) {
+        continue;
+      }
+      int x = bshp.positions[0][0];
+      int y = bshp.positions[0][1];
+      int xSize = bshp.size;
+      int ySize = 1;
+      if (bshp.vertical) {
+        ySize = bshp.size;
+        xSize = 1;
+      }
+
+      // Checking if it overlaps with another ship
+      for (int j = 0; j < playerBoard.battleships.length; j++) {
+        Battleship bshp2 = playerBoard.battleships[j];
+        if (i == j || bshp2.positions[0][0] == -1) continue; // Ensures ship is initialized and a ship isn't checking itself
+
+        for (int p = 0; p < bshp2.positions.length; p++) {
+          int xB = bshp2.positions[0][0];
+          int yB = bshp2.positions[0][1];
+          if (xB >= x && xB < x + xSize && yB >= y && yB < y + ySize) {
+            continue;
+          }
+        }
+      }
+      i++;
     }
-    
   }
 }
 
