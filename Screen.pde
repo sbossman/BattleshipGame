@@ -11,6 +11,9 @@ class Screen {
   void switchToNextScreen(){
     
   }
+  void handleMousescroll() {
+    
+  }
 }
 
 

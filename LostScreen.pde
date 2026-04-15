@@ -19,4 +19,6 @@ class LostScreen extends Screen {
       gameState = "MENU";
     }
   }
+    void handleMousescroll() {
+  }
 }

@@ -41,6 +41,8 @@ class MenuScreen extends Screen{
       exit();
     }
   }
+      void handleMousescroll() {
+  }
   
   void switchToNextScene(){
     playerBoard = new Board();

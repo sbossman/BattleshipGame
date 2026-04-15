@@ -47,7 +47,6 @@ void setup() {
 
 void draw() {
   // Runs different screens based on game state
-  
   currentScreen = screens.get(gameState);
   currentScreen.display();
 }
@@ -57,4 +56,8 @@ void draw() {
 void mousePressed(){
   // Checks which mouse pressing function to run based on game state
   currentScreen.handleMouseclick();
+}
+
+void mouseWheel() {
+  currentScreen.handleMousescroll();
 }

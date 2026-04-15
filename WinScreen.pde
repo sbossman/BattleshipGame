@@ -19,4 +19,6 @@ class WinScreen extends Screen {
       gameState = "MENU";
     }
   }
+    void handleMousescroll() {
+  }
 }

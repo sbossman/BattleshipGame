@@ -64,8 +64,6 @@ class SetupScreen extends Screen {
       illegalPlaceCheck();
       return;
     }
-
-
     // Checking if battleship selected, otherwise selects battleship
     selectedInd = -1;
     for (int i = 0; i < playerBoard.battleships.length; i++) {
@@ -78,6 +76,15 @@ class SetupScreen extends Screen {
       playerBoard.battleships[selectedInd].select();
     }
   }
+  
+  void handleMousescroll() {
+    if (selectedInd != -1) {
+      playerBoard.battleships[selectedInd].flipVertical();
+      illegalPlaceCheck();
+    }
+    
+  }
+
 
   // Checks if all ships are placed
   boolean allPlaced() {
@@ -145,7 +152,7 @@ class SetupScreen extends Screen {
 
     return flag;
   }
-
+  
   void switchToNextScene() {
     gameState = "GUESS";
     comBoard = new Board();

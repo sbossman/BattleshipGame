@@ -172,8 +172,6 @@ class GuessScreen extends Screen{
     }
     return guess;
   }
-  
-  
-  
-  
+    void handleMousescroll() {
+  }
 }
