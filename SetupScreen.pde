@@ -47,10 +47,12 @@ class SetupScreen extends Screen {
       switchToNextScene();
       return;
     }
+    
     // Vertically flips if selected and already has been positioned
     if (rotateBtn.isMouseover() && selectedInd != -1 && playerBoard.battleships[selectedInd].positions[0][0] != -1) {
       playerBoard.battleships[selectedInd].flipVertical();
       illegalPlaceCheck();
+      return;
     }
 
     // Checking if a place on the board was selected and battleship selected
@@ -64,6 +66,7 @@ class SetupScreen extends Screen {
       illegalPlaceCheck();
       return;
     }
+    
     // Checking if battleship selected, otherwise selects battleship
     selectedInd = -1;
     for (int i = 0; i < playerBoard.battleships.length; i++) {
