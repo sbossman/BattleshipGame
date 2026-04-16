@@ -44,6 +44,7 @@ class GuessScreen extends Screen{
       int x = int((mouseX - (comBoardX - boardSize/2))/sqSize);
       int y = int((mouseY - (boardY - boardSize/2))/sqSize);
       
+      if(comBoard.board[x][y].guessed) return;
       comBoard.guessPosition(x, y);
       comGuess();
       
