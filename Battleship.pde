@@ -1,17 +1,25 @@
 class Battleship {
   int[][] positions;
   int size;
+  int order;
   boolean vertical;
   boolean sunk;
   PImage img;
   
   boolean selected = false;
-  
   boolean illegallyPlaced = false;
   
   // TODO: Implement everything
   Battleship(int _size){
-    size = _size;    
+    size = _size;
+    order = size;
+    if(_size == 1){
+      size = 3;
+      order = 2;
+    }  
+    else if(_size == 2){
+      order = 1;
+    }
     vertical = false;
     sunk = false;
     
@@ -21,7 +29,7 @@ class Battleship {
       positions[i][1] = -1;
     }
     
-    String imgName = "Ship " + size + ".png";
+    String imgName = "Ship " + _size + ".png";
     img = loadImage(imgName);
   }
   
@@ -79,11 +87,12 @@ class Battleship {
   void drawBattleship(int boardX, int boardY){
     int x = 0;
     int y = 0;
+
     img.resize(sqSize * size, sqSize);
     
     if(positions[0][0] == -1){
-      x = 700;
-      y = size * 75;
+      x = 500;
+      y = order * 2 * sqSize + sqSize;
     }
     else{
       x = positions[0][0] * sqSize + boardX;
@@ -119,8 +128,8 @@ class Battleship {
     int y = 0;
     
     if(positions[0][0] == -1){
-      x = 700;
-      y = size * 75;
+      x = 500;
+      y = order * 2 * sqSize + sqSize;
     }
     else{
       x = (positions[0][0] * sqSize) + (int)(240 - (boardSize/2));

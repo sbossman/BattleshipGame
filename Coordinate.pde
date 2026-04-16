@@ -10,5 +10,4 @@ class Coordinate{
   void guess() {
     guessed = true;
   }
-  
 }

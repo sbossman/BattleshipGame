@@ -5,9 +5,9 @@ class Board{
   
   // TODO: Implement everything
   Board(){
-    battleships = new Battleship[4];
-    for(int i = 0; i < 4; i++){
-      battleships[i] = new Battleship(i + 2);
+    battleships = new Battleship[5];
+    for(int i = 0; i < 5; i++){
+      battleships[i] = new Battleship(i + 1);
     }
     
     board = new Coordinate[boardSq][boardSq];
@@ -99,9 +99,7 @@ class Board{
     return true;
   }  
   
-  
   void setRandomShips(){
-    // TODO: Make this actually random
     int a;
     int b;
     int v;

@@ -3,7 +3,6 @@ class LostScreen extends Screen {
   
   LostScreen(){
     toMenuBtn = new Button(width/2, height/2, 400, 102, "To Menu");
-    
   }
   
   void display(){
@@ -19,6 +18,7 @@ class LostScreen extends Screen {
       gameState = "MENU";
     }
   }
+  
     void handleMousescroll() {
   }
 }

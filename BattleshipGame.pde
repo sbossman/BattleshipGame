@@ -41,8 +41,7 @@ void setup() {
   screens.put("LOST", new LostScreen()); 
   
   currentScreen = screens.get(gameState);
-  
-  
+    
 }
 
 void draw() {
@@ -50,8 +49,6 @@ void draw() {
   currentScreen = screens.get(gameState);
   currentScreen.display();
 }
-
-
 
 void mousePressed(){
   // Checks which mouse pressing function to run based on game state
