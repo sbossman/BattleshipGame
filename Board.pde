@@ -103,24 +103,47 @@ class Board{
     int a;
     int b;
     int v;
-    int i = 0;
-      while(i < comBoard.battleships.length){
-        a = int(random(10));
-        b = int(random(10));
-        v = int(random(2));
-        
-        if(v == 1){
-          comBoard.battleships[i].setVertical(true);
-        }
-        
-        comBoard.battleships[i].setPosition(a, b);
-        
-        Battleship bshp = comBoard.battleships[i];
-        
-        // Checking if a ship is over the edge of the board
-        if (!withinBounds(bshp.positions[bshp.size - 1]) || !withinBounds(bshp.positions[0])) {
+    int i = comBoard.battleships.length - 1;
+    while(i >= 0){
+      a = int(random(10));
+      b = int(random(10));
+      v = int(random(2));
+      
+      if(v == 1){
+        comBoard.battleships[i].setVertical(true);
+      }
+      
+      comBoard.battleships[i].setPosition(a, b);
+      
+      // Checking if all ships are placed legally
+      if(illegalPlaceCheck()){
         continue;
       }
+      
+      i--;
+    }
+  }
+  
+  boolean illegalPlaceCheck() {
+    boolean[] notOverEdge = new boolean[battleships.length];
+    boolean[] noOverlap = new boolean[battleships.length];
+
+    // Initializing all ships to be in valid positions
+    for (int i = 0; i < battleships.length; i++) {
+      notOverEdge[i] = true;
+      noOverlap[i] = true;
+    }
+
+    // Checking individual ships
+    for (int i = 0; i < battleships.length; i++) {
+      Battleship bshp = battleships[i];
+      if (bshp.positions[0][0] == -1) continue; // Checks if this ship hasn't yet been initialized
+
+      // Checking if a ship is over the edge of the board
+      if (!withinBounds(bshp.positions[bshp.size - 1]) || !withinBounds(bshp.positions[0])) {
+        notOverEdge[i] = false;
+      }
+
       int x = bshp.positions[0][0];
       int y = bshp.positions[0][1];
       int xSize = bshp.size;
@@ -131,20 +154,32 @@ class Board{
       }
 
       // Checking if it overlaps with another ship
-      for (int j = 0; j < playerBoard.battleships.length; j++) {
-        Battleship bshp2 = playerBoard.battleships[j];
+      for (int j = 0; j < battleships.length; j++) {
+        Battleship bshp2 = battleships[j];
         if (i == j || bshp2.positions[0][0] == -1) continue; // Ensures ship is initialized and a ship isn't checking itself
 
         for (int p = 0; p < bshp2.positions.length; p++) {
-          int xB = bshp2.positions[0][0];
-          int yB = bshp2.positions[0][1];
+          int xB = bshp2.positions[p][0];
+          int yB = bshp2.positions[p][1];
           if (xB >= x && xB < x + xSize && yB >= y && yB < y + ySize) {
-            continue;
+            noOverlap[i] = false;
+            noOverlap[j] = false;
           }
         }
       }
-      i++;
     }
+
+    // Uses the previous flags to flag certain ships as illegally placed
+    boolean flag = false;
+    for (int i = 0; i < battleships.length; i++) {
+      if (!notOverEdge[i] || !noOverlap[i]) {
+        battleships[i].setIllegallyPlaced(true);
+        flag = true;
+      } else {
+        battleships[i].setIllegallyPlaced(false);
+      }
+    }
+    return flag;
   }
 }
 
