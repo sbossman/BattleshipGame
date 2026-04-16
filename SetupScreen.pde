@@ -47,8 +47,8 @@ class SetupScreen extends Screen {
       switchToNextScene();
       return;
     }
-    // Vertically flips if selected
-    if (rotateBtn.isMouseover() && selectedInd != -1) {
+    // Vertically flips if selected and already has been positioned
+    if (rotateBtn.isMouseover() && selectedInd != -1 && playerBoard.battleships[selectedInd].positions[0][0] != -1) {
       playerBoard.battleships[selectedInd].flipVertical();
       illegalPlaceCheck();
     }
@@ -78,7 +78,7 @@ class SetupScreen extends Screen {
   }
   
   void handleMousescroll() {
-    if (selectedInd != -1) {
+    if (selectedInd != -1 && playerBoard.battleships[selectedInd].positions[0][0] != -1) {
       playerBoard.battleships[selectedInd].flipVertical();
       illegalPlaceCheck();
     }
