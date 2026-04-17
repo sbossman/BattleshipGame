@@ -1,11 +1,13 @@
 class MenuScreen extends Screen{
+  PApplet parent;
   int btnWidth = 402;
   int btnHeight = 102;
   Button easyBtn;
   Button hardBtn;
   Button quitBtn;
   
-  MenuScreen(){
+  MenuScreen(PApplet parent){
+    this.parent = parent;
     easyBtn = new Button(width/2, 200, btnWidth, btnHeight, "Easy");
     hardBtn = new Button(width/2, 350, btnWidth, btnHeight, "Hard");
     quitBtn = new Button(width/2, 500, btnWidth, btnHeight, "Quit");
@@ -45,7 +47,7 @@ class MenuScreen extends Screen{
   }
   
   void switchToNextScene(){
-    playerBoard = new Board();
+    playerBoard = new Board(parent);
     gameState = "SETUP";
   }
 }

@@ -1,4 +1,5 @@
 class SetupScreen extends Screen {
+  PApplet parent;
   Button setupDoneBtn;
   Button rotateBtn;
   int selectedInd = -1;
@@ -8,8 +9,9 @@ class SetupScreen extends Screen {
   boolean showIncomplete = false;
 
 
-  SetupScreen() {
+  SetupScreen(PApplet parent) {
     //textFont(DejaVu40);
+    this.parent = parent;
     setupDoneBtn = new Button(5 * width/8 - 1, 552, 150, 50, "Done");
     rotateBtn = new Button(7 * width/8, 550, 152, 50, "Rotate");
   }
@@ -101,7 +103,7 @@ class SetupScreen extends Screen {
   
   void switchToNextScene() {
     gameState = "GUESS";
-    comBoard = new Board();
+    comBoard = new Board(parent);
     comBoard.setRandomShips();
     comBoard.finishSetup();
     playerBoard.finishSetup();

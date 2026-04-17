@@ -1,10 +1,23 @@
+import processing.sound.*;
+
+
 class Board{
   Battleship[] battleships;
   Coordinate[][] board;
   PImage img = loadImage("Water.png");
+  SoundFile missS;
+  SoundFile hitS;
+  SoundFile sunkS;
+  
   
   // TODO: Implement everything
-  Board(){
+  Board(PApplet parent){
+    
+    // load audio
+    missS = new SoundFile(parent, "Audio/SFX/53763__digifishmusic__ploppymix.wav");
+    hitS = new SoundFile(parent, "Audio/SFX/636717__deevdarabbit__explosions.wav");
+    sunkS = new SoundFile(parent, "Audio/SFX/ship-danger-whistle-siren.wav");
+    
     battleships = new Battleship[5];
     for(int i = 0; i < 5; i++){
       battleships[i] = new Battleship(i + 1);
@@ -19,12 +32,18 @@ class Board{
   }
   
   boolean guessPosition(int x, int y){
+    sunkS.amp(40);
     board[x][y].guess();
     for(int i = 0; i < battleships.length; i++){
       if(battleships[i].checkIfHit(x, y)){
-        battleships[i].checkSunk(board);
+        if (battleships[i].checkSunk(board))
+          sunkS.play();
+         else
+           hitS.play();
         return true;
       }
+      else
+        missS.play();
     }
     return false;
   }

@@ -1,4 +1,4 @@
-class Battleship {
+class Battleship { 
   int[][] positions;
   int size;
   int order;
@@ -11,6 +11,7 @@ class Battleship {
   
   // TODO: Implement everything
   Battleship(int _size){
+    // audio
     size = _size;
     order = size;
     if(_size == 1){

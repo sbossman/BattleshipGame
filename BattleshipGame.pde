@@ -1,3 +1,7 @@
+import processing.sound.*;
+SoundFile bgMusic;
+
+
 color bgColor = color(75, 175, 255); 
 color btnColor = color(1, 30, 105);
 color btnHoverColor = color(41, 74, 158);
@@ -33,9 +37,16 @@ void setup() {
   Oswald40 = loadFont("Oswald-40.vlw");
   Oswald70 = loadFont("Oswald-70.vlw");
   
+  // audio files
+  bgMusic = new SoundFile(this, "Audio/Music/Preparing-for-Battle.ogg");
+
+  
+  // play the background music all the time
+  bgMusic.loop();
+  
   // Establishing button positions
-  screens.put("MENU", new MenuScreen());
-  screens.put("SETUP", new SetupScreen());
+  screens.put("MENU", new MenuScreen(this));
+  screens.put("SETUP", new SetupScreen(this));
   screens.put("GUESS", new GuessScreen());
   screens.put("WIN", new WinScreen());
   screens.put("LOST", new LostScreen()); 
