@@ -22,4 +22,10 @@ There is no narrative or story to the game, although there is a little bit of a 
 ## Appeal
 Why would anyone want to play this game? What sort of people would be attracted to this game?
 People who like games of deduction and guessing would enjoy this game. People would want to play this game because it involves an interesting challenge to guess locations of ships. 
+## Installation
+In order to run this game, you will need to add the sound library into your instance of Processing. this allows this game to have SFXs and music; and can be done by: 
+- clicking "Sketch" on the toolbar
+- Selecting "Manage Libraries" from "Import Library >"
+- Searching and clicking "Sound" in the contribution Manager
+- Clicking install to install the library 
 
