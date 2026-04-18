@@ -8,6 +8,8 @@ class GuessScreen extends Screen{
   
   boolean playerTurn = true;
   
+  int playerGuessTime = 0;
+  
     
   GuessScreen(){
     loseBtn = new Button(width/4, 550, 200, 60, "Lose Game");
@@ -28,7 +30,7 @@ class GuessScreen extends Screen{
     text("Your board", 240, height/2 - boardSize/2 - 10);
     text("Computer board", 680, height/2 - boardSize/2 - 10);
     
-    if(!playerTurn && (clock % 100 == 0)){
+    if(!playerTurn && ((clock - playerGuessTime) % 100 == 99)){
       comGuess();
     }
     
@@ -54,6 +56,7 @@ class GuessScreen extends Screen{
       
       if(comBoard.board[x][y].guessed) return;
       comBoard.guessPosition(x, y);
+      playerGuessTime = clock;
       playerTurn = false;
       
     }
