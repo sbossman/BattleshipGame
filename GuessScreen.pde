@@ -6,6 +6,8 @@ class GuessScreen extends Screen{
   int playerBoardX = 240;
   int boardY = height/2;
   
+  boolean playerTurn = true;
+  
     
   GuessScreen(){
     loseBtn = new Button(width/4, 550, 200, 60, "Lose Game");
@@ -26,12 +28,18 @@ class GuessScreen extends Screen{
     text("Your board", 240, height/2 - boardSize/2 - 10);
     text("Computer board", 680, height/2 - boardSize/2 - 10);
     
-    winBtn.drawButton();
-    loseBtn.drawButton();
+    if(!playerTurn && (clock % 200 == 0)){
+      comGuess();
+    }
+    
+    // winBtn.drawButton();
+    // loseBtn.drawButton();
   }
   
   // Responsible for handling all mouse clicks on guessing screen
   void handleMouseclick(){
+    if(!playerTurn) return;
+    
     if(loseBtn.isMouseover()){
       gameState = "LOST";
     }
@@ -46,18 +54,10 @@ class GuessScreen extends Screen{
       
       if(comBoard.board[x][y].guessed) return;
       comBoard.guessPosition(x, y);
-      comGuess();
+      playerTurn = false;
       
     }
     
-    /*
-    if((mouseX > (playerBoardX - boardSize/2) && mouseX < (playerBoardX + boardSize/2)) &&
-        (mouseY > (boardY - boardSize/2) && mouseY < (boardY + boardSize/2))){
-      int x = int((mouseX - (playerBoardX - boardSize/2))/sqSize);
-      int y = int((mouseY - (boardY - boardSize/2))/sqSize);
-      playerBoard.guessPosition(x,y);
-    }
-    */
     
     if(playerBoard.checkLoss()){
       gameState = "LOST";
@@ -81,6 +81,7 @@ class GuessScreen extends Screen{
       guess[0] = (int) random(10);
       guess[1] = (int) random(10);
     }
+    playerTurn = true;
     return guess;
   }
   
@@ -172,6 +173,8 @@ class GuessScreen extends Screen{
     }
     return guess;
   }
-    void handleMousescroll() {
+   
+   void handleMousescroll() {
   }
+
 }

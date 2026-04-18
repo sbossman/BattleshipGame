@@ -27,6 +27,9 @@ Screen currentScreen;
 Board playerBoard;
 Board comBoard;
 
+int clock = 0;
+
+
 void setup() {
   size(900, 600);
   background(bgColor);
@@ -53,13 +56,13 @@ void setup() {
   screens.put("LOST", new LostScreen()); 
   
   currentScreen = screens.get(gameState);
-    
 }
 
 void draw() {
   // Runs different screens based on game state
   currentScreen = screens.get(gameState);
   currentScreen.display();
+  clock++;
 }
 
 void mousePressed(){
