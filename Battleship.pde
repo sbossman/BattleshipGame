@@ -9,7 +9,7 @@ class Battleship {
   boolean selected = false;
   boolean illegallyPlaced = false;
   
-  // TODO: Implement everything
+  
   Battleship(int _size){
     // audio
     size = _size;

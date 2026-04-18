@@ -28,7 +28,7 @@ class GuessScreen extends Screen{
     text("Your board", 240, height/2 - boardSize/2 - 10);
     text("Computer board", 680, height/2 - boardSize/2 - 10);
     
-    if(!playerTurn && (clock % 200 == 0)){
+    if(!playerTurn && (clock % 100 == 0)){
       comGuess();
     }
     

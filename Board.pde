@@ -82,8 +82,6 @@ class Board{
     float boardT = boardY - (boardSize/2);
     
     rectMode(CENTER);
-    //fill(btnColor);
-    //rect(boardX, boardY, boardSize, boardSize);
     tint(255);
     image(img, boardX - boardSize/2, boardY - boardSize/2, boardSize, boardSize);
     
@@ -109,7 +107,9 @@ class Board{
       if(battleships[i].sunk || showUnsunkShips) battleships[i].drawBattleship((int)boardL, (int)boardT);
     }
     
+    
     // Draws guesses
+    int anim = 0;
     if(gameState == "GUESS"){
       for(int x = 0; x < 10; x++){
         for(int y = 0; y < 10; y++){
@@ -124,31 +124,29 @@ class Board{
             circle(x * sqSize + boardX - (boardSize/2) + (sqSize/2), y * sqSize + boardY - (boardSize/2) + (sqSize/2), sqSize - 7);
             tint(255);
             if (gifBoard[x][y] == 1) {
+              anim++;
               image(explosion, (x * sqSize + boardX - (boardSize/2) + (sqSize/2)) - 155, (y * sqSize + boardY - (boardSize/2) + (sqSize/2)) - 85, 450, 300);
               explosion.loop();
-              //while(explosion.isPlaying()){
-              //  println(explosion.currentFrame());
-              //  if (explosion.currentFrame() == 6) {
-              //    explosion.stop();
-              //  }
-              //}
+              if(explosion.isPlaying() && explosion.currentFrame() == 6){
+                explosion.stop();
+                anim = 0;
+              }
             }
             else if (gifBoard[x][y] == 2) {
+              anim++;
               image(splash, (x * sqSize + boardX - (boardSize/2) + (sqSize/2)) - 155, (y * sqSize + boardY - (boardSize/2) + (sqSize/2)) - 85, 450, 300);
               splash.loop();
-              //while(splash.isPlaying()){
-              //  println(splash.currentFrame());
-              //  if (splash.currentFrame() == 6) {
-              //    splash.stop();
-              //  }
-              //}
+              if(splash.isPlaying() && splash.currentFrame() == 6){
+                splash.stop();
+                anim = 0;
+              }
             }
           }
         }
       }
       for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
-          gifBoard[i][j] = 0;
+          if(anim ==0)  gifBoard[i][j] = 0;
         }
       }
     }
