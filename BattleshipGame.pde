@@ -1,3 +1,4 @@
+import gifAnimation.*;
 import processing.sound.*;
 SoundFile bgMusic;
 
