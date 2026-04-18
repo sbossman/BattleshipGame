@@ -46,7 +46,7 @@ void setup() {
 
   
   // play the background music all the time
-  bgMusic.loop();
+  // bgMusic.loop();
   
   // Establishing button positions
   screens.put("MENU", new MenuScreen(this));

@@ -72,6 +72,7 @@ class GuessScreen extends Screen{
     int[] guess = new int[2];
     if(gameMode == "EASY") guess = guessEasy();
     else guess = guessHard();
+    playerTurn = true;
     return playerBoard.guessPosition(guess[0], guess[1]);
   }
   
@@ -81,7 +82,6 @@ class GuessScreen extends Screen{
       guess[0] = (int) random(10);
       guess[1] = (int) random(10);
     }
-    playerTurn = true;
     return guess;
   }
   
