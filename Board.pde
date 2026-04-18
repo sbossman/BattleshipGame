@@ -1,14 +1,17 @@
+import gifAnimation.*;
 import processing.sound.*;
 
 
 class Board{
   Battleship[] battleships;
   Coordinate[][] board;
+  int[][] gifBoard = new int[10][10];
   PImage img = loadImage("Water.png");
   SoundFile missS;
   SoundFile hitS;
   SoundFile sunkS;
-  
+  Gif explosion;
+  Gif splash;
   
   // TODO: Implement everything
   Board(PApplet parent){
@@ -17,6 +20,11 @@ class Board{
     missS = new SoundFile(parent, "Audio/SFX/53763__digifishmusic__ploppymix.wav");
     hitS = new SoundFile(parent, "Audio/SFX/636717__deevdarabbit__explosions.wav");
     sunkS = new SoundFile(parent, "Audio/SFX/ship-danger-whistle-siren.wav");
+    
+    // load gif
+    frameRate(100);
+    explosion = new Gif(parent, "Fire animation.gif");
+    splash = new Gif(parent, "Water animation.gif");
     
     battleships = new Battleship[5];
     for(int i = 0; i < 5; i++){
@@ -36,15 +44,20 @@ class Board{
     board[x][y].guess();
     for(int i = 0; i < battleships.length; i++){
       if(battleships[i].checkIfHit(x, y)){
-        if (battleships[i].checkSunk(board))
+        if (battleships[i].checkSunk(board)) {
           sunkS.play();
-         else
-           hitS.play();
+        }
+        else {
+          hitS.play();
+        }
+        gifBoard[x][y] = 1;
         return true;
       }
-      else
+      else {
         missS.play();
+      }
     }
+    gifBoard[x][y] = 2;
     return false;
   }
   
@@ -102,10 +115,40 @@ class Board{
         for(int y = 0; y < 10; y++){
           if(board[x][y].guessed){
             noStroke();
-            if(board[x][y].ship) fill(255, 0, 0);
-            else fill(255);
+            if(board[x][y].ship) {
+              fill(255, 0, 0);
+            }
+            else {
+              fill(255);
+            }
             circle(x * sqSize + boardX - (boardSize/2) + (sqSize/2), y * sqSize + boardY - (boardSize/2) + (sqSize/2), sqSize - 7);
+            tint(255);
+            if (gifBoard[x][y] == 1) {
+              image(explosion, (x * sqSize + boardX - (boardSize/2) + (sqSize/2)) - 155, (y * sqSize + boardY - (boardSize/2) + (sqSize/2)) - 85, 450, 300);
+              explosion.loop();
+              //while(explosion.isPlaying()){
+              //  println(explosion.currentFrame());
+              //  if (explosion.currentFrame() == 6) {
+              //    explosion.stop();
+              //  }
+              //}
+            }
+            else if (gifBoard[x][y] == 2) {
+              image(splash, (x * sqSize + boardX - (boardSize/2) + (sqSize/2)) - 155, (y * sqSize + boardY - (boardSize/2) + (sqSize/2)) - 85, 450, 300);
+              splash.loop();
+              //while(splash.isPlaying()){
+              //  println(splash.currentFrame());
+              //  if (splash.currentFrame() == 6) {
+              //    splash.stop();
+              //  }
+              //}
+            }
           }
+        }
+      }
+      for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+          gifBoard[i][j] = 0;
         }
       }
     }
